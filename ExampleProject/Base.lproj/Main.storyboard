@@ -105,6 +105,8 @@
                         <outlet property="addBinButton" destination="lYU-Ae-ggZ" id="8BR-gS-VS7"/>
                         <outlet property="addLocationButton" destination="ucY-Wn-1CC" id="axM-Ay-2pT"/>
                         <outlet property="binText" destination="Km3-Q8-JMB" id="JSG-FY-kbJ"/>
+                        <outlet property="itemNameText" destination="iUp-Cy-Jkt" id="iOC-oe-rav"/>
+                        <outlet property="itemQtyText" destination="I9A-v9-lHi" id="cPb-L6-SWc"/>
                         <outlet property="locationText" destination="NKW-Se-xhI" id="ssP-xs-qb6"/>
                         <outlet property="navigationBar" destination="TPe-AC-r7i" id="wRZ-As-MbL"/>
                         <outlet property="picker" destination="PeX-pW-SUw" id="84h-rH-5cf"/>

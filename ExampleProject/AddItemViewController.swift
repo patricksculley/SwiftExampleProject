@@ -14,6 +14,8 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBOutlet weak var addLocationButton: UIButton!
     @IBOutlet weak var addBinButton: UIButton!
     @IBOutlet weak var locationText: UITextField!
+    @IBOutlet weak var itemNameText: UITextField!
+    @IBOutlet weak var itemQtyText: UITextField!
     @IBOutlet weak var binText: UITextField!
     @IBOutlet weak var picker: UIPickerView!
     var pickerData = [String]()
@@ -37,10 +39,13 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         navigationBar.topItem?.title = "Add Item"
         addLocationButton.addTarget(self, action: #selector(addLocationHandler), for: .touchUpInside)
         addBinButton.addTarget(self, action: #selector(addBinHandler), for: .touchUpInside)
+        itemNameText.delegate = self;
+        itemQtyText.delegate = self;
         locationText.delegate = self;
         binText.delegate = self;
         picker.delegate = self
         picker.dataSource = self
+        picker.isHidden = true
     }
     
     // MARK: UI Delegates   {
@@ -68,28 +73,28 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     //MARK: - Picker View Data Sources and Delegates
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if (textField == self.locationText)    {
-        }
         switch textField {
             case self.locationText:
                 self.pickerData = ["Office","Storage Center","Closet","Basement","In use"]
                 picker.reloadAllComponents()
+                self.picker.isHidden = false
                 if self.locationText.text != nil && self.locationText.text != ""  {
                     self.picker.selectRow(pickerData.index(of: self.locationText.text!)!, inComponent:0, animated: false)
                 }
                 else {
                     self.picker.selectRow(0, inComponent:0, animated: false)
-            }
+                }
             case self.binText:
                 self.pickerData = ["Top shelf","Clear drawer #1","Clear drawer #2","Network Cabinet","None"]
                 picker.reloadAllComponents()
+                self.picker.isHidden = false
                 if self.binText.text != nil && self.binText.text != ""  {
                     self.picker.selectRow(pickerData.index(of: self.binText.text!)!, inComponent:0, animated: false)
                 }
                 else {
                     self.picker.selectRow(0, inComponent:0, animated: false)
                 }
-            default: break
+            default: self.picker.isHidden = true
         }
 
         self.pickerRowSelectedHandler = {(selectedIndex:Int) -> Void in
@@ -122,6 +127,7 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         pickerRowSelectedHandler!(row)
+        self.picker.isHidden = true
     }
     
     // MARK: - Navigation   {
