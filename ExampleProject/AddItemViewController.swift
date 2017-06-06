@@ -10,6 +10,7 @@ import UIKit
 
 class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
+
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var addLocationButton: UIButton!
     @IBOutlet weak var addBinButton: UIButton!
@@ -18,6 +19,8 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBOutlet weak var itemQtyText: UITextField!
     @IBOutlet weak var binText: UITextField!
     @IBOutlet weak var picker: UIPickerView!
+    @IBOutlet weak var saveButton: UIButton!
+    
     var pickerData = [String]()
     var pickerRowSelectedHandler: ((Int) -> Void)?
 
@@ -37,6 +40,7 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBar.topItem?.title = "Add Item"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(searchHandler(sender:)))
         addLocationButton.addTarget(self, action: #selector(addLocationHandler), for: .touchUpInside)
         addBinButton.addTarget(self, action: #selector(addBinHandler), for: .touchUpInside)
         itemNameText.delegate = self;
@@ -49,6 +53,11 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     }
     
     // MARK: UI Delegates   {
+    
+    func searchHandler(sender: UIBarButtonItem) {
+        print("Search clicked!")
+        self.performSegue(withIdentifier: "itemSearchSegue", sender:self )
+    }
     
     func addLocationHandler(sender: UIBarButtonItem) {
         print("Add location clicked!")
@@ -73,6 +82,7 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     //MARK: - Picker View Data Sources and Delegates
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        var allowEditing = true
         switch textField {
             case self.locationText:
                 self.pickerData = ["Office","Storage Center","Closet","Basement","In use"]
@@ -84,6 +94,7 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 else {
                     self.picker.selectRow(0, inComponent:0, animated: false)
                 }
+                allowEditing = false
             case self.binText:
                 self.pickerData = ["Top shelf","Clear drawer #1","Clear drawer #2","Network Cabinet","None"]
                 picker.reloadAllComponents()
@@ -94,6 +105,7 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 else {
                     self.picker.selectRow(0, inComponent:0, animated: false)
                 }
+                allowEditing = false
             default: self.picker.isHidden = true
         }
 
@@ -111,7 +123,7 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             print("\(entityType) selected: \(selectedIndex)")
         }
 
-        return false;
+        return allowEditing;
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

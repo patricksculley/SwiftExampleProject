@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD0236551EE623520007E687 /* ItemSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0236541EE623520007E687 /* ItemSearchTableViewController.swift */; };
 		CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBC81EE4C6E8008A1433 /* AppDelegate.swift */; };
 		CD25BBCE1EE4C6E8008A1433 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD25BBCC1EE4C6E8008A1433 /* Main.storyboard */; };
 		CD25BBD11EE4C6E8008A1433 /* ExampleProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBCF1EE4C6E8008A1433 /* ExampleProject.xcdatamodeld */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CD0236541EE623520007E687 /* ItemSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemSearchTableViewController.swift; sourceTree = "<group>"; };
 		CD25BBC51EE4C6E8008A1433 /* ExampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD25BBC81EE4C6E8008A1433 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD25BBCD1EE4C6E8008A1433 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */,
 				CD25BBFC1EE4E2CF008A1433 /* AddItemViewController.swift */,
+				CD0236541EE623520007E687 /* ItemSearchTableViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 			files = (
 				CD25BBFD1EE4E2CF008A1433 /* AddItemViewController.swift in Sources */,
 				CD25BBD11EE4C6E8008A1433 /* ExampleProject.xcdatamodeld in Sources */,
+				CD0236551EE623520007E687 /* ItemSearchTableViewController.swift in Sources */,
 				CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */,
 				CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */,
 			);
@@ -519,6 +523,7 @@
 				CD25BBF21EE4C6E8008A1433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CD25BBF31EE4C6E8008A1433 /* Build configuration list for PBXNativeTarget "ExampleProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +532,7 @@
 				CD25BBF51EE4C6E8008A1433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CD25BBF61EE4C6E8008A1433 /* Build configuration list for PBXNativeTarget "ExampleProjectUITests" */ = {
 			isa = XCConfigurationList;
@@ -535,6 +541,7 @@
 				CD25BBF81EE4C6E8008A1433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
