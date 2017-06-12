@@ -39,8 +39,8 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationBar.topItem?.title = "Add Item"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(searchHandler(sender:)))
+        self.updateTitle(actionType: ActionType.Create)
         addLocationButton.addTarget(self, action: #selector(addLocationHandler), for: .touchUpInside)
         addBinButton.addTarget(self, action: #selector(addBinHandler), for: .touchUpInside)
         itemNameText.delegate = self;
@@ -50,6 +50,10 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         picker.delegate = self
         picker.dataSource = self
         picker.isHidden = true
+    }
+    
+    func updateTitle(actionType:ActionType) {
+        navigationBar.topItem?.title = "\(String(describing:actionType)) Item"
     }
     
     // MARK: UI Delegates   {
@@ -146,9 +150,20 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "itemSearchSegue" {
+//            let viewController:ItemSearchTableViewController = segue.destination as! ItemSearchTableViewController
+            
+        }
     }
     
+    @IBAction func unwindToAddItem(sender: UIStoryboardSegue) {
+        let itemSearchTableViewController = sender.source as! ItemSearchTableViewController
+        let item = itemSearchTableViewController.item
+        self.itemNameText.text = item?.name
+        self.locationText.text = item?.bin?.location?.name
+        self.binText.text = item?.bin?.name
+        self.updateTitle(actionType: ActionType.Update)
+
+    }
 
 }

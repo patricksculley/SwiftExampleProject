@@ -8,19 +8,27 @@
 
 import UIKit
 
-class ItemSearchTableViewController: UITableViewController {
+class ItemSearchTableViewController: UITableViewController, ItemViewControllerInterface {
 
+    var item:Item?
+    private var itemArray = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController!.navigationBar.topItem?.title = "Item Search"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelHandler(sender:)))
-        
+        self.loadTableData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    func loadTableData()    {
+        itemArray.append(Item(name: "First item", bin: Bin(name: "1st Shelf", location: Location(name: "Closet"))))
+        itemArray.append(Item(name: "Second item", bin: Bin(name: "1st Drawer", location: Location(name: "Basement"))))
+        itemArray.append(Item(name: "Third item", bin: Bin(name: "1st Cabinet", location: Location(name: "Storage"))))
     }
     
     func cancelHandler(sender: UIBarButtonItem) {
@@ -37,18 +45,23 @@ class ItemSearchTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return itemArray.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
-        cell.textLabel?.text = "My Item     qty 15"
-        cell.detailTextLabel?.text = "Location - Bin"
+        cell.textLabel?.text = itemArray[indexPath.row].name!
+        cell.detailTextLabel?.text = "\(itemArray[indexPath.row].bin!.location!.name!) - \(itemArray[indexPath.row].bin!.name!)"
         return cell
     }
     
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("\(itemArray[indexPath.row].name!) selected")
+        self.item = itemArray[indexPath.row]
+        self.performSegue(withIdentifier: "unwindToAddItem", sender: self)
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

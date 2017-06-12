@@ -17,6 +17,11 @@
 		CD25BBEC1EE4C6E8008A1433 /* ExampleProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBEB1EE4C6E8008A1433 /* ExampleProjectUITests.swift */; };
 		CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */; };
 		CD25BBFD1EE4E2CF008A1433 /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFC1EE4E2CF008A1433 /* AddItemViewController.swift */; };
+		CDC940CF1EE9EA780085EEF7 /* EntityBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940CE1EE9EA780085EEF7 /* EntityBase.swift */; };
+		CDC940D11EE9EAA40085EEF7 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D01EE9EAA40085EEF7 /* Item.swift */; };
+		CDC940D31EE9EAC10085EEF7 /* Bin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D21EE9EAC10085EEF7 /* Bin.swift */; };
+		CDC940D51EE9EACD0085EEF7 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D41EE9EACD0085EEF7 /* Location.swift */; };
+		CDC940D81EE9F1210085EEF7 /* ItemViewControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D71EE9F1210085EEF7 /* ItemViewControllerInterface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +58,11 @@
 		CD25BBED1EE4C6E8008A1433 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		CD25BBFC1EE4E2CF008A1433 /* AddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
+		CDC940CE1EE9EA780085EEF7 /* EntityBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityBase.swift; sourceTree = "<group>"; };
+		CDC940D01EE9EAA40085EEF7 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		CDC940D21EE9EAC10085EEF7 /* Bin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bin.swift; sourceTree = "<group>"; };
+		CDC940D41EE9EACD0085EEF7 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		CDC940D71EE9F1210085EEF7 /* ItemViewControllerInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewControllerInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +113,8 @@
 		CD25BBC71EE4C6E8008A1433 /* ExampleProject */ = {
 			isa = PBXGroup;
 			children = (
+				CDC940D61EE9EFD00085EEF7 /* Protocol */,
+				CDC940CD1EE9EA310085EEF7 /* Entity */,
 				CD25BBF91EE4CC54008A1433 /* ViewController */,
 				CD25BBC81EE4C6E8008A1433 /* AppDelegate.swift */,
 				CD25BBCC1EE4C6E8008A1433 /* Main.storyboard */,
@@ -140,6 +152,25 @@
 				CD0236541EE623520007E687 /* ItemSearchTableViewController.swift */,
 			);
 			name = ViewController;
+			sourceTree = "<group>";
+		};
+		CDC940CD1EE9EA310085EEF7 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				CDC940CE1EE9EA780085EEF7 /* EntityBase.swift */,
+				CDC940D01EE9EAA40085EEF7 /* Item.swift */,
+				CDC940D21EE9EAC10085EEF7 /* Bin.swift */,
+				CDC940D41EE9EACD0085EEF7 /* Location.swift */,
+			);
+			name = Entity;
+			sourceTree = "<group>";
+		};
+		CDC940D61EE9EFD00085EEF7 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				CDC940D71EE9F1210085EEF7 /* ItemViewControllerInterface.swift */,
+			);
+			name = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,10 +308,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD25BBFD1EE4E2CF008A1433 /* AddItemViewController.swift in Sources */,
+				CDC940CF1EE9EA780085EEF7 /* EntityBase.swift in Sources */,
 				CD25BBD11EE4C6E8008A1433 /* ExampleProject.xcdatamodeld in Sources */,
 				CD0236551EE623520007E687 /* ItemSearchTableViewController.swift in Sources */,
+				CDC940D51EE9EACD0085EEF7 /* Location.swift in Sources */,
+				CDC940D11EE9EAA40085EEF7 /* Item.swift in Sources */,
+				CDC940D31EE9EAC10085EEF7 /* Bin.swift in Sources */,
 				CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */,
 				CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */,
+				CDC940D81EE9F1210085EEF7 /* ItemViewControllerInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
