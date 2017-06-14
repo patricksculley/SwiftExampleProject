@@ -8,27 +8,39 @@
 
 import UIKit
 
-class ItemSearchTableViewController: UITableViewController, ItemViewControllerInterface {
+class ItemSearchTableViewController: UITableViewController, EntityViewControllerInterface {
 
-    var item:Item?
-    private var itemArray = [Item]()
-    
+    var entity:EntityBase?
+    private var entityArray = [EntityBase]()
+    private var filteredEntityArray = [EntityBase]()
+    let searchController = UISearchController(searchResultsController: nil)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController!.navigationBar.topItem?.title = "Item Search"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelHandler(sender:)))
         self.loadTableData()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        definesPresentationContext = true
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        // Setup the Scope Bar
+        searchController.searchBar.scopeButtonTitles = ["All", "Item", "Bin", "Location"]
+        tableView.tableHeaderView = searchController.searchBar
     }
     
     func loadTableData()    {
-        itemArray.append(Item(name: "First item", bin: Bin(name: "1st Shelf", location: Location(name: "Closet"))))
-        itemArray.append(Item(name: "Second item", bin: Bin(name: "1st Drawer", location: Location(name: "Basement"))))
-        itemArray.append(Item(name: "Third item", bin: Bin(name: "1st Cabinet", location: Location(name: "Storage"))))
+        entityArray.append(Item(name: "Drill", qty:1, bin: Bin(name: "Top Shelf", location: Location(name: "Closet"))))
+        entityArray.append(Item(name: "Screws", qty:12, bin: Bin(name: "Bottom Drawer", location: Location(name: "Basement"))))
+        entityArray.append(Item(name: "Wood", bin: Bin(name: "Last Cabinet", location: Location(name: "Storage"))))
+        entityArray.append((entityArray[0] as! Item).bin!)
+        entityArray.append((entityArray[1] as! Item).bin!)
+        entityArray.append((entityArray[2] as! Item).bin!)
+        entityArray.append((entityArray[0] as! Item).bin!.location!)
+        entityArray.append((entityArray[1] as! Item).bin!.location!)
+        entityArray.append((entityArray[2] as! Item).bin!.location!)
     }
     
     func cancelHandler(sender: UIBarButtonItem) {
@@ -44,67 +56,65 @@ class ItemSearchTableViewController: UITableViewController, ItemViewControllerIn
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return itemArray.count
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filteredEntityArray.count
+        }
+        return entityArray.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
-        cell.textLabel?.text = itemArray[indexPath.row].name!
-        cell.detailTextLabel?.text = "\(itemArray[indexPath.row].bin!.location!.name!) - \(itemArray[indexPath.row].bin!.name!)"
+        var entity:EntityBase?
+        if searchController.isActive && searchController.searchBar.text != "" {
+            entity = filteredEntityArray[indexPath.row]
+        } else {
+            entity = entityArray[indexPath.row]
+        }
+        cell.textLabel?.text = entity!.name!
+        if let item = entity as? Item? {
+            cell.detailTextLabel?.text = "Bin: \(item!.bin!.name!), Location: \(item!.bin!.location!.name!)"
+        } else if let bin = entity as? Bin? {
+            cell.detailTextLabel?.text = "Location: \(bin!.location!.name!)"
+        }
+        else if let location = entity as? Location? {
+            cell.detailTextLabel?.text = "(\(String(describing: location!.entityType!)))"
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(itemArray[indexPath.row].name!) selected")
-        self.item = itemArray[indexPath.row]
+        if searchController.isActive && searchController.searchBar.text != "" {
+            self.entity = filteredEntityArray[indexPath.row]
+        } else {
+            self.entity = entityArray[indexPath.row]
+        }
+        print("\(self.entity!.name!) selected")
         self.performSegue(withIdentifier: "unwindToAddItem", sender: self)
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredEntityArray = entityArray.filter({( entity : EntityBase) -> Bool in
+            let categoryMatch = (scope == "All") || (String(describing:entity.entityType!) == scope)
+            let name = entity.name!.lowercased()
+            print("\(String(describing:entity.entityType!)) \(name) \(entity.name!.lowercased().contains(searchText.lowercased()))")
+            return categoryMatch && entity.name!.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
     }
-    */
+}
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+extension ItemSearchTableViewController: UISearchBarDelegate {
+    // MARK: - UISearchBar Delegate
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
-    */
+}
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+extension ItemSearchTableViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

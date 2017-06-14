@@ -21,7 +21,7 @@
 		CDC940D11EE9EAA40085EEF7 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D01EE9EAA40085EEF7 /* Item.swift */; };
 		CDC940D31EE9EAC10085EEF7 /* Bin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D21EE9EAC10085EEF7 /* Bin.swift */; };
 		CDC940D51EE9EACD0085EEF7 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D41EE9EACD0085EEF7 /* Location.swift */; };
-		CDC940D81EE9F1210085EEF7 /* ItemViewControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D71EE9F1210085EEF7 /* ItemViewControllerInterface.swift */; };
+		CDC940D81EE9F1210085EEF7 /* EntityViewControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D71EE9F1210085EEF7 /* EntityViewControllerInterface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +62,7 @@
 		CDC940D01EE9EAA40085EEF7 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		CDC940D21EE9EAC10085EEF7 /* Bin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bin.swift; sourceTree = "<group>"; };
 		CDC940D41EE9EACD0085EEF7 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		CDC940D71EE9F1210085EEF7 /* ItemViewControllerInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewControllerInterface.swift; sourceTree = "<group>"; };
+		CDC940D71EE9F1210085EEF7 /* EntityViewControllerInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityViewControllerInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +168,7 @@
 		CDC940D61EE9EFD00085EEF7 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				CDC940D71EE9F1210085EEF7 /* ItemViewControllerInterface.swift */,
+				CDC940D71EE9F1210085EEF7 /* EntityViewControllerInterface.swift */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";
@@ -316,7 +316,7 @@
 				CDC940D31EE9EAC10085EEF7 /* Bin.swift in Sources */,
 				CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */,
 				CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */,
-				CDC940D81EE9F1210085EEF7 /* ItemViewControllerInterface.swift in Sources */,
+				CDC940D81EE9F1210085EEF7 /* EntityViewControllerInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

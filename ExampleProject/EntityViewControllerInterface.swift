@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol ItemViewControllerInterface {
-    var item:Item?  {
+protocol EntityViewControllerInterface {
+    var entity:EntityBase?  {
         get set
     }
 }

@@ -8,11 +8,14 @@
 
 import UIKit
 
-class AddLocationViewController: UIViewController {
+class AddLocationViewController: UIViewController, EntityViewControllerInterface {
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var locationNameText: UITextField!
+
+    var entity:EntityBase?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +32,8 @@ class AddLocationViewController: UIViewController {
 
     func saveHandler(sender: UIBarButtonItem) {
         print("Save clicked!")
-        self.dismiss(animated: true, completion: nil)
+        self.entity = Location(name: locationNameText.text!)
+        self.performSegue(withIdentifier: "unwindToAddItem", sender: self)
     }
 
     

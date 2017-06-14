@@ -10,6 +10,7 @@ import Foundation
 
 class Item:EntityBase {
     var bin:Bin?
+    var qty:Int?
     
     convenience init(name:String, bin:Bin)   {
         self.init(name:name)
@@ -18,5 +19,10 @@ class Item:EntityBase {
     
     init(name:String)   {
         super.init(name:name, entityTypeName:String(describing:type(of:self)))
+    }
+    
+    convenience init(name:String, qty:Int, bin:Bin)   {
+        self.init(name:name, bin:bin)
+        self.qty = qty
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+class AddItemViewController: UIViewController, EntityViewControllerInterface, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
 
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -21,9 +21,11 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var saveButton: UIButton!
     
+    var entity:EntityBase?
     var pickerData = [String]()
     var pickerRowSelectedHandler: ((Int) -> Void)?
-
+    var locationArray:[String] =  ["Closet","Basement","Storage"]
+    var binArray:[String] = ["Top Shelf","Bottom Drawer","Last Cabinet"]
     
     enum EntityType {
         case Bin
@@ -41,6 +43,7 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(searchHandler(sender:)))
         self.updateTitle(actionType: ActionType.Create)
+        self.entity = Item(name: "")
         addLocationButton.addTarget(self, action: #selector(addLocationHandler), for: .touchUpInside)
         addBinButton.addTarget(self, action: #selector(addBinHandler), for: .touchUpInside)
         itemNameText.delegate = self;
@@ -66,6 +69,7 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     func addLocationHandler(sender: UIBarButtonItem) {
         print("Add location clicked!")
         self.showEditNamePopup(entityType: .Location, actionType: .Create)
+//        self.performSegue(withIdentifier: "addLocationSegue", sender:self )
     }
     
     func addBinHandler(sender: UIBarButtonItem) {
@@ -79,6 +83,14 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
             let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
             print("Text field: \(textField.text)")
+            if entityType == EntityType.Bin {
+                self.binArray.append(textField.text!)
+                self.binText.text = textField.text
+            } else if entityType == EntityType.Location {
+                self.locationArray.append(textField.text!)
+                self.locationText.text = textField.text
+            }
+            
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -89,10 +101,10 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         var allowEditing = true
         switch textField {
             case self.locationText:
-                self.pickerData = ["Office","Storage Center","Closet","Basement","In use"]
+                self.pickerData = locationArray
                 picker.reloadAllComponents()
                 self.picker.isHidden = false
-                if self.locationText.text != nil && self.locationText.text != ""  {
+                if self.locationText.text != nil && !self.locationText.text!.isEmpty  {
                     self.picker.selectRow(pickerData.index(of: self.locationText.text!)!, inComponent:0, animated: false)
                 }
                 else {
@@ -100,10 +112,10 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 }
                 allowEditing = false
             case self.binText:
-                self.pickerData = ["Top shelf","Clear drawer #1","Clear drawer #2","Network Cabinet","None"]
+                self.pickerData = binArray
                 picker.reloadAllComponents()
                 self.picker.isHidden = false
-                if self.binText.text != nil && self.binText.text != ""  {
+                if self.binText.text != nil && !self.binText.text!.isEmpty  {
                     self.picker.selectRow(pickerData.index(of: self.binText.text!)!, inComponent:0, animated: false)
                 }
                 else {
@@ -152,18 +164,48 @@ class AddItemViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "itemSearchSegue" {
 //            let viewController:ItemSearchTableViewController = segue.destination as! ItemSearchTableViewController
-            
+            picker.isHidden = true
+        }
+    }
+    
+    @IBAction func unwindFromAddLocation(sender: UIStoryboardSegue) {
+        let viewController = sender.source as! EntityViewControllerInterface
+        if let entity = viewController.entity {
+            print("Location added: \(entity.name!)")
         }
     }
     
     @IBAction func unwindToAddItem(sender: UIStoryboardSegue) {
-        let itemSearchTableViewController = sender.source as! ItemSearchTableViewController
-        let item = itemSearchTableViewController.item
-        self.itemNameText.text = item?.name
-        self.locationText.text = item?.bin?.location?.name
-        self.binText.text = item?.bin?.name
+        let itemSearchTableViewController = sender.source as! EntityViewControllerInterface
+        let entity:EntityBase? = itemSearchTableViewController.entity
+        if let item = entity as? Item? {
+            self.entity = item
+            self.updateFields(fromItem: item!)
+        } else if let bin = entity as? Bin? {
+            self.updateFields(fromBin: bin!)
+        }
+        else if let location = entity as? Location? {
+            self.updateFields(fromLocation: location!)
+        }
+    }
+    
+    func updateFields(fromItem:Item)    {
+        self.itemNameText.text = fromItem.name
+        if let qty = fromItem.qty   {
+            self.itemQtyText.text = String(qty)
+        }
+        self.locationText.text = fromItem.bin?.location?.name
+        self.binText.text = fromItem.bin?.name
         self.updateTitle(actionType: ActionType.Update)
-
+    }
+    
+    func updateFields(fromBin:Bin)    {
+        self.locationText.text = fromBin.location?.name
+        self.binText.text = fromBin.name
+    }
+    
+    func updateFields(fromLocation:Location)    {
+        self.locationText.text = fromLocation.name
     }
 
 }
