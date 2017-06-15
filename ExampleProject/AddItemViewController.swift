@@ -80,15 +80,15 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
     func showEditNamePopup(entityType:EntityType, actionType:ActionType)    {
         let alert = UIAlertController(title: "\(actionType) \(entityType)", message: "Enter \(entityType) name", preferredStyle: .alert)
         alert.addTextField { (textField) in textField.placeholder = "\(entityType) name"}
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert, weak self] (_) in
             let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
             print("Text field: \(textField.text)")
             if entityType == EntityType.Bin {
-                self.binArray.append(textField.text!)
-                self.binText.text = textField.text
+                self?.binArray.append(textField.text!)
+                self?.binText.text = textField.text
             } else if entityType == EntityType.Location {
-                self.locationArray.append(textField.text!)
-                self.locationText.text = textField.text
+                self?.locationArray.append(textField.text!)
+                self?.locationText.text = textField.text
             }
             
         }))
@@ -175,7 +175,7 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
         }
     }
     
-    @IBAction func unwindToAddItem(sender: UIStoryboardSegue) {
+    @IBAction func unwindFromSearch(sender: UIStoryboardSegue) {
         let itemSearchTableViewController = sender.source as! EntityViewControllerInterface
         let entity:EntityBase? = itemSearchTableViewController.entity
         if let item = entity as? Item? {

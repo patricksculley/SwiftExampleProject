@@ -14,20 +14,22 @@ class ItemSearchTableViewController: UITableViewController, EntityViewController
     private var entityArray = [EntityBase]()
     private var filteredEntityArray = [EntityBase]()
     let searchController = UISearchController(searchResultsController: nil)
-
+    let allScope = "All"
+    var currentScope:String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController!.navigationBar.topItem?.title = "Item Search"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelHandler(sender:)))
         self.loadTableData()
+        currentScope = allScope
         // Setup the Search Controller
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         definesPresentationContext = true
         searchController.dimsBackgroundDuringPresentation = false
-        
         // Setup the Scope Bar
-        searchController.searchBar.scopeButtonTitles = ["All", "Item", "Bin", "Location"]
+        searchController.searchBar.scopeButtonTitles = [allScope, String(describing: EntityType.Item), String(describing: EntityType.Bin), String(describing: EntityType.Location)]
         tableView.tableHeaderView = searchController.searchBar
     }
     
@@ -41,35 +43,22 @@ class ItemSearchTableViewController: UITableViewController, EntityViewController
         entityArray.append((entityArray[0] as! Item).bin!.location!)
         entityArray.append((entityArray[1] as! Item).bin!.location!)
         entityArray.append((entityArray[2] as! Item).bin!.location!)
-    }
-    
-    func cancelHandler(sender: UIBarButtonItem) {
-        print("Cancel clicked!")
-        self.dismiss(animated: true, completion: nil)
+        filteredEntityArray = entityArray
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive && searchController.searchBar.text != "" {
-            return filteredEntityArray.count
-        }
-        return entityArray.count
+        return filteredEntityArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
-        var entity:EntityBase?
-        if searchController.isActive && searchController.searchBar.text != "" {
-            entity = filteredEntityArray[indexPath.row]
-        } else {
-            entity = entityArray[indexPath.row]
-        }
+        let entity:EntityBase? = filteredEntityArray[indexPath.row]
         cell.textLabel?.text = entity!.name!
         if let item = entity as? Item? {
             cell.detailTextLabel?.text = "Bin: \(item!.bin!.name!), Location: \(item!.bin!.location!.name!)"
@@ -83,23 +72,25 @@ class ItemSearchTableViewController: UITableViewController, EntityViewController
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if searchController.isActive && searchController.searchBar.text != "" {
-            self.entity = filteredEntityArray[indexPath.row]
-        } else {
-            self.entity = entityArray[indexPath.row]
-        }
-        print("\(self.entity!.name!) selected")
+        self.entity = filteredEntityArray[indexPath.row]
+        print("\(self.entity?.name!) selected")
         self.performSegue(withIdentifier: "unwindToAddItem", sender: self)
     }
     
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        filteredEntityArray = entityArray.filter({( entity : EntityBase) -> Bool in
-            let categoryMatch = (scope == "All") || (String(describing:entity.entityType!) == scope)
+    func filterContentForSearchText(_ searchText: String, scope: String) {
+        filteredEntityArray = entityArray.filter({[weak self] ( entity : EntityBase) -> Bool in
+            self?.currentScope = scope
+            let entityTypeMatch = (self?.currentScope == self?.allScope || String(describing:entity.entityType!) == scope)
             let name = entity.name!.lowercased()
-            print("\(String(describing:entity.entityType!)) \(name) \(entity.name!.lowercased().contains(searchText.lowercased()))")
-            return categoryMatch && entity.name!.lowercased().contains(searchText.lowercased())
+            print("\(String(describing:entity.entityType!)) \(name) entityTypeMatch: \(entityTypeMatch) searchTextMatch: \(searchText == "" || entity.name!.lowercased().contains(searchText.lowercased()))")
+            return entityTypeMatch && (searchText == "" || entity.name!.lowercased().contains(searchText.lowercased()))
         })
         tableView.reloadData()
+    }
+    
+    func cancelHandler(sender: UIBarButtonItem) {
+        print("Cancel clicked!")
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
