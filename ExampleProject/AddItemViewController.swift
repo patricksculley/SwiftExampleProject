@@ -10,7 +10,6 @@ import UIKit
 
 class AddItemViewController: UIViewController, EntityViewControllerInterface, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
-
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var addLocationButton: UIButton!
     @IBOutlet weak var addBinButton: UIButton!
@@ -68,30 +67,33 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
     
     func addLocationHandler(sender: UIBarButtonItem) {
         print("Add location clicked!")
-        self.showEditNamePopup(entityType: .Location, actionType: .Create)
+        self.showAddEntityAlertView(entityType: .Location, actionType: .Create)
 //        self.performSegue(withIdentifier: "addLocationSegue", sender:self )
     }
     
     func addBinHandler(sender: UIBarButtonItem) {
         print("Add location clicked!")
-        self.showEditNamePopup(entityType: .Bin, actionType: .Create)
+        self.showAddEntityAlertView(entityType: .Bin, actionType: .Create)
     }
 
-    func showEditNamePopup(entityType:EntityType, actionType:ActionType)    {
+    func showAddEntityAlertView(entityType:EntityType, actionType:ActionType)    {
         let alert = UIAlertController(title: "\(actionType) \(entityType)", message: "Enter \(entityType) name", preferredStyle: .alert)
         alert.addTextField { (textField) in textField.placeholder = "\(entityType) name"}
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert, weak self] (_) in
-            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
-            print("Text field: \(textField.text)")
-            if entityType == EntityType.Bin {
-                self?.binArray.append(textField.text!)
-                self?.binText.text = textField.text
-            } else if entityType == EntityType.Location {
-                self?.locationArray.append(textField.text!)
-                self?.locationText.text = textField.text
-            }
-            
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
+            [weak alert, weak self] (_) in
+                let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+                print("Text field: \(textField.text)")
+                if entityType == EntityType.Bin {
+                    self?.binArray.append(textField.text!)
+                    self?.binText.text = textField.text
+                } else if entityType == EntityType.Location {
+                    self?.locationArray.append(textField.text!)
+                    self?.locationText.text = textField.text
+                }
         }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

@@ -79,8 +79,8 @@ class ItemSearchTableViewController: UITableViewController, EntityViewController
     
     func filterContentForSearchText(_ searchText: String, scope: String) {
         filteredEntityArray = entityArray.filter({[weak self] ( entity : EntityBase) -> Bool in
-            self?.currentScope = scope
-            let entityTypeMatch = (self?.currentScope == self?.allScope || String(describing:entity.entityType!) == scope)
+            self!.currentScope = scope
+            let entityTypeMatch = (self!.currentScope == self!.allScope || String(describing:entity.entityType!) == scope)
             let name = entity.name!.lowercased()
             print("\(String(describing:entity.entityType!)) \(name) entityTypeMatch: \(entityTypeMatch) searchTextMatch: \(searchText == "" || entity.name!.lowercased().contains(searchText.lowercased()))")
             return entityTypeMatch && (searchText == "" || entity.name!.lowercased().contains(searchText.lowercased()))
