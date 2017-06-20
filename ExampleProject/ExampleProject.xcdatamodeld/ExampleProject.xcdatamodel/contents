@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G1510" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Bin" representedClassName="Bin" parentEntity="EntityBase" syncable="YES" codeGenerationType="class">
+        <relationship name="binToItemFK" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Item" inverseName="itemToBinFK" inverseEntity="Item" syncable="YES"/>
+        <relationship name="binToLocationFK" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locationToBinFK" inverseEntity="Location" syncable="YES"/>
+    </entity>
+    <entity name="EntityBase" representedClassName="EntityBase" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="entityTypeValue" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Item" representedClassName="Item" parentEntity="EntityBase" syncable="YES" codeGenerationType="class">
+        <attribute name="qty" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="20" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="itemToBinFK" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Bin" inverseName="binToItemFK" inverseEntity="Bin" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="Location" parentEntity="EntityBase" syncable="YES" codeGenerationType="class">
+        <relationship name="locationToBinFK" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Bin" inverseName="binToLocationFK" inverseEntity="Bin" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Item" positionX="-182" positionY="75" width="128" height="73"/>
+        <element name="Bin" positionX="-11" positionY="-64" width="128" height="73"/>
+        <element name="Location" positionX="169" positionY="-126" width="128" height="58"/>
+        <element name="EntityBase" positionX="117" positionY="99" width="128" height="88"/>
+    </elements>
 </model>

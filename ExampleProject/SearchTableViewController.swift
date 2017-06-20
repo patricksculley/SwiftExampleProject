@@ -1,5 +1,5 @@
 //
-//  ItemSearchTableViewController.swift
+//  SearchTableViewController
 //  ExampleProject
 //
 //  Created by Patrick Sculley on 6/5/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemSearchTableViewController: UITableViewController, EntityViewControllerInterface {
+class SearchTableViewController: UITableViewController, EntityViewControllerInterface {
 
     var entity:EntityBase?
     private var entityArray = [EntityBase]()
@@ -16,6 +16,9 @@ class ItemSearchTableViewController: UITableViewController, EntityViewController
     let searchController = UISearchController(searchResultsController: nil)
     let allScope = "All"
     var currentScope:String?
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,15 +37,12 @@ class ItemSearchTableViewController: UITableViewController, EntityViewController
     }
     
     func loadTableData()    {
-        entityArray.append(Item(name: "Drill", qty:1, bin: Bin(name: "Top Shelf", location: Location(name: "Closet"))))
-        entityArray.append(Item(name: "Screws", qty:12, bin: Bin(name: "Bottom Drawer", location: Location(name: "Basement"))))
-        entityArray.append(Item(name: "Wood", bin: Bin(name: "Last Cabinet", location: Location(name: "Storage"))))
-        entityArray.append((entityArray[0] as! Item).bin!)
-        entityArray.append((entityArray[1] as! Item).bin!)
-        entityArray.append((entityArray[2] as! Item).bin!)
-        entityArray.append((entityArray[0] as! Item).bin!.location!)
-        entityArray.append((entityArray[1] as! Item).bin!.location!)
-        entityArray.append((entityArray[2] as! Item).bin!.location!)
+        do {
+            let fetchUtility = FetchUtility()
+            entityArray = fetchUtility.fetchSortedLocation()!
+        } catch {
+            print("Fetch error \(error.localizedDescription)")
+        }
         filteredEntityArray = entityArray
     }
 
@@ -61,9 +61,9 @@ class ItemSearchTableViewController: UITableViewController, EntityViewController
         let entity:EntityBase? = filteredEntityArray[indexPath.row]
         cell.textLabel?.text = entity!.name!
         if let item = entity as? Item? {
-            cell.detailTextLabel?.text = "Bin: \(item!.bin!.name!), Location: \(item!.bin!.location!.name!)"
+            cell.detailTextLabel?.text = "Bin: \(item!.itemToBinFK!.name!), Location: \(item!.itemToBinFK!.binToLocationFK!.name!)"
         } else if let bin = entity as? Bin? {
-            cell.detailTextLabel?.text = "Location: \(bin!.location!.name!)"
+            cell.detailTextLabel?.text = "Location: \(bin!.binToLocationFK!.name!)"
         }
         else if let location = entity as? Location? {
             cell.detailTextLabel?.text = "(\(String(describing: location!.entityType!)))"
@@ -94,14 +94,14 @@ class ItemSearchTableViewController: UITableViewController, EntityViewController
     }
 }
 
-extension ItemSearchTableViewController: UISearchBarDelegate {
+extension SearchTableViewController: UISearchBarDelegate {
     // MARK: - UISearchBar Delegate
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }
 
-extension ItemSearchTableViewController: UISearchResultsUpdating {
+extension SearchTableViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar

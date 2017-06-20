@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CD0236551EE623520007E687 /* ItemSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0236541EE623520007E687 /* ItemSearchTableViewController.swift */; };
+		CD0236551EE623520007E687 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0236541EE623520007E687 /* SearchTableViewController.swift */; };
+		CD0375381EF8D1A2008C2199 /* CoreDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0375371EF8D1A2008C2199 /* CoreDataExtension.swift */; };
+		CD03753A1EF8D7D4008C2199 /* FetchUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0375391EF8D7D4008C2199 /* FetchUtility.swift */; };
 		CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBC81EE4C6E8008A1433 /* AppDelegate.swift */; };
 		CD25BBCE1EE4C6E8008A1433 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD25BBCC1EE4C6E8008A1433 /* Main.storyboard */; };
 		CD25BBD11EE4C6E8008A1433 /* ExampleProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBCF1EE4C6E8008A1433 /* ExampleProject.xcdatamodeld */; };
@@ -16,11 +18,7 @@
 		CD25BBE11EE4C6E8008A1433 /* ExampleProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBE01EE4C6E8008A1433 /* ExampleProjectTests.swift */; };
 		CD25BBEC1EE4C6E8008A1433 /* ExampleProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBEB1EE4C6E8008A1433 /* ExampleProjectUITests.swift */; };
 		CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */; };
-		CD25BBFD1EE4E2CF008A1433 /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFC1EE4E2CF008A1433 /* AddItemViewController.swift */; };
-		CDC940CF1EE9EA780085EEF7 /* EntityBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940CE1EE9EA780085EEF7 /* EntityBase.swift */; };
-		CDC940D11EE9EAA40085EEF7 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D01EE9EAA40085EEF7 /* Item.swift */; };
-		CDC940D31EE9EAC10085EEF7 /* Bin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D21EE9EAC10085EEF7 /* Bin.swift */; };
-		CDC940D51EE9EACD0085EEF7 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D41EE9EACD0085EEF7 /* Location.swift */; };
+		CD25BBFD1EE4E2CF008A1433 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */; };
 		CDC940D81EE9F1210085EEF7 /* EntityViewControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D71EE9F1210085EEF7 /* EntityViewControllerInterface.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CD0236541EE623520007E687 /* ItemSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemSearchTableViewController.swift; sourceTree = "<group>"; };
+		CD0236541EE623520007E687 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		CD0375371EF8D1A2008C2199 /* CoreDataExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtension.swift; sourceTree = "<group>"; };
+		CD0375391EF8D7D4008C2199 /* FetchUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchUtility.swift; path = ../FetchUtility.swift; sourceTree = "<group>"; };
 		CD25BBC51EE4C6E8008A1433 /* ExampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD25BBC81EE4C6E8008A1433 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD25BBCD1EE4C6E8008A1433 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,11 +57,7 @@
 		CD25BBEB1EE4C6E8008A1433 /* ExampleProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleProjectUITests.swift; sourceTree = "<group>"; };
 		CD25BBED1EE4C6E8008A1433 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
-		CD25BBFC1EE4E2CF008A1433 /* AddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
-		CDC940CE1EE9EA780085EEF7 /* EntityBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityBase.swift; sourceTree = "<group>"; };
-		CDC940D01EE9EAA40085EEF7 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		CDC940D21EE9EAC10085EEF7 /* Bin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bin.swift; sourceTree = "<group>"; };
-		CDC940D41EE9EACD0085EEF7 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
 		CDC940D71EE9F1210085EEF7 /* EntityViewControllerInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityViewControllerInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +86,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD03753B1EF8DF08008C2199 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CD0375391EF8D7D4008C2199 /* FetchUtility.swift */,
+				CD0375371EF8D1A2008C2199 /* CoreDataExtension.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		CD25BBBC1EE4C6E8008A1433 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +118,7 @@
 		CD25BBC71EE4C6E8008A1433 /* ExampleProject */ = {
 			isa = PBXGroup;
 			children = (
+				CD03753B1EF8DF08008C2199 /* Model */,
 				CDC940D61EE9EFD00085EEF7 /* Protocol */,
 				CDC940CD1EE9EA310085EEF7 /* Entity */,
 				CD25BBF91EE4CC54008A1433 /* ViewController */,
@@ -148,8 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */,
-				CD25BBFC1EE4E2CF008A1433 /* AddItemViewController.swift */,
-				CD0236541EE623520007E687 /* ItemSearchTableViewController.swift */,
+				CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */,
+				CD0236541EE623520007E687 /* SearchTableViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -157,10 +163,6 @@
 		CDC940CD1EE9EA310085EEF7 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				CDC940CE1EE9EA780085EEF7 /* EntityBase.swift */,
-				CDC940D01EE9EAA40085EEF7 /* Item.swift */,
-				CDC940D21EE9EAC10085EEF7 /* Bin.swift */,
-				CDC940D41EE9EACD0085EEF7 /* Location.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -307,13 +309,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD25BBFD1EE4E2CF008A1433 /* AddItemViewController.swift in Sources */,
-				CDC940CF1EE9EA780085EEF7 /* EntityBase.swift in Sources */,
+				CD25BBFD1EE4E2CF008A1433 /* ItemViewController.swift in Sources */,
 				CD25BBD11EE4C6E8008A1433 /* ExampleProject.xcdatamodeld in Sources */,
-				CD0236551EE623520007E687 /* ItemSearchTableViewController.swift in Sources */,
-				CDC940D51EE9EACD0085EEF7 /* Location.swift in Sources */,
-				CDC940D11EE9EAA40085EEF7 /* Item.swift in Sources */,
-				CDC940D31EE9EAC10085EEF7 /* Bin.swift in Sources */,
+				CD0236551EE623520007E687 /* SearchTableViewController.swift in Sources */,
+				CD03753A1EF8D7D4008C2199 /* FetchUtility.swift in Sources */,
+				CD0375381EF8D1A2008C2199 /* CoreDataExtension.swift in Sources */,
 				CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */,
 				CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */,
 				CDC940D81EE9F1210085EEF7 /* EntityViewControllerInterface.swift in Sources */,

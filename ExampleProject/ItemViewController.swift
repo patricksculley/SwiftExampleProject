@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddItemViewController: UIViewController, EntityViewControllerInterface, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+class ItemViewController: UIViewController, EntityViewControllerInterface, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var addLocationButton: UIButton!
@@ -23,14 +23,7 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
     var entity:EntityBase?
     var pickerData = [String]()
     var pickerRowSelectedHandler: ((Int) -> Void)?
-    var locationArray:[String] =  ["Closet","Basement","Storage"]
-    var binArray:[String] = ["Top Shelf","Bottom Drawer","Last Cabinet"]
-    
-    enum EntityType {
-        case Bin
-        case Item
-        case Location
-    }
+    var fetchUtility = FetchUtility()
     
     enum ActionType {
         case Create
@@ -42,9 +35,9 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(searchHandler(sender:)))
         self.updateTitle(actionType: ActionType.Create)
-        self.entity = Item(name: "")
         addLocationButton.addTarget(self, action: #selector(addLocationHandler), for: .touchUpInside)
         addBinButton.addTarget(self, action: #selector(addBinHandler), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveHandler), for: .touchUpInside)
         itemNameText.delegate = self;
         itemQtyText.delegate = self;
         locationText.delegate = self;
@@ -68,29 +61,56 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
     func addLocationHandler(sender: UIBarButtonItem) {
         print("Add location clicked!")
         self.showAddEntityAlertView(entityType: .Location, actionType: .Create)
-//        self.performSegue(withIdentifier: "addLocationSegue", sender:self )
     }
     
     func addBinHandler(sender: UIBarButtonItem) {
         print("Add location clicked!")
         self.showAddEntityAlertView(entityType: .Bin, actionType: .Create)
     }
+    
+    func saveHandler(sender: UIBarButtonItem) {
+        print("Save button clicked!")
+    }
 
     func showAddEntityAlertView(entityType:EntityType, actionType:ActionType)    {
         let alert = UIAlertController(title: "\(actionType) \(entityType)", message: "Enter \(entityType) name", preferredStyle: .alert)
         alert.addTextField { (textField) in textField.placeholder = "\(entityType) name"}
         
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
             [weak alert, weak self] (_) in
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                context.reset()
                 let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
                 print("Text field: \(textField.text)")
+                var isError = false
+                var errorMessage = ""
                 if entityType == EntityType.Bin {
-                    self?.binArray.append(textField.text!)
-                    self?.binText.text = textField.text
+                    
+                    let bin = Bin(context: context)
+                    bin.name = textField.text!
+                    bin.entityType = EntityType.Bin
+                    let  text:String = self!.locationText.text!
+                    let location = self!.fetchUtility.fetchLocation(byName:text)
+                    bin.binToLocationFK = location
+                    
+                    do {
+                        try bin.validateForInsert()
+                    } catch {
+                        isError = true
+                        errorMessage = error.localizedDescription
+                    }
                 } else if entityType == EntityType.Location {
-                    self?.locationArray.append(textField.text!)
-                    self?.locationText.text = textField.text
+                    let location = Location(context: context)
+                    location.name = textField.text!
+                    location.entityType = EntityType.Location
                 }
+            
+            if !isError {
+                (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            } else {
+                UIAlertController(title: "\(actionType) \(entityType)", message: errorMessage, preferredStyle: .alert)
+            }
+
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
@@ -103,7 +123,11 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
         var allowEditing = true
         switch textField {
             case self.locationText:
-                self.pickerData = locationArray
+                self.pickerData = (fetchUtility.fetchSortedLocation()?.map(
+                    {
+                        (value: Location) -> String in
+                            return value.name!
+                    }))!
                 picker.reloadAllComponents()
                 self.picker.isHidden = false
                 if self.locationText.text != nil && !self.locationText.text!.isEmpty  {
@@ -114,7 +138,7 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
                 }
                 allowEditing = false
             case self.binText:
-                self.pickerData = binArray
+//                self.pickerData = binArray
                 picker.reloadAllComponents()
                 self.picker.isHidden = false
                 if self.binText.text != nil && !self.binText.text!.isEmpty  {
@@ -193,17 +217,15 @@ class AddItemViewController: UIViewController, EntityViewControllerInterface, UI
     
     func updateFields(fromItem:Item)    {
         self.itemNameText.text = fromItem.name
-        if let qty = fromItem.qty   {
-            self.itemQtyText.text = String(qty)
-        }
-        self.locationText.text = fromItem.bin?.location?.name
-        self.binText.text = fromItem.bin?.name
+        self.itemQtyText.text = String(fromItem.qty)
+        self.locationText.text = fromItem.itemToBinFK?.binToLocationFK?.name
+        self.binText.text = fromItem.itemToBinFK?.name
         self.updateTitle(actionType: ActionType.Update)
     }
     
     func updateFields(fromBin:Bin)    {
-        self.locationText.text = fromBin.location?.name
-        self.binText.text = fromBin.name
+//        self.locationText.text = fromBin.location?.name
+//        self.binText.text = fromBin.name
     }
     
     func updateFields(fromLocation:Location)    {

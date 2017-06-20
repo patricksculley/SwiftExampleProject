@@ -32,8 +32,8 @@ class AddLocationViewController: UIViewController, EntityViewControllerInterface
 
     func saveHandler(sender: UIBarButtonItem) {
         print("Save clicked!")
-        self.entity = Location(name: locationNameText.text!)
-        self.performSegue(withIdentifier: "unwindToAddItem", sender: self)
+//        self.entity = Location(name: locationNameText.text!)
+//        self.performSegue(withIdentifier: "unwindToAddItem", sender: self)
     }
 
     
