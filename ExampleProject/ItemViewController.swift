@@ -23,7 +23,7 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
     var entity:EntityBase?
     var pickerData = [String]()
     var pickerRowSelectedHandler: ((Int) -> Void)?
-    var fetchUtility = FetchUtility()
+    let coreDataFetch = CoreDataFetch()
     
     enum ActionType {
         case Create
@@ -45,6 +45,7 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
         picker.delegate = self
         picker.dataSource = self
         picker.isHidden = true
+        
     }
     
     func updateTitle(actionType:ActionType) {
@@ -90,8 +91,8 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
                     bin.name = textField.text!
                     bin.entityType = EntityType.Bin
                     let  text:String = self!.locationText.text!
-                    let location = self!.fetchUtility.fetchLocation(byName:text)
-                    bin.binToLocationFK = location
+                    let location = self!.coreDataFetch.fetchEntity(byName:text)
+                    bin.binToLocationFK = location as! Location?
                     
                     do {
                         try bin.validateForInsert()
@@ -123,11 +124,11 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
         var allowEditing = true
         switch textField {
             case self.locationText:
-                self.pickerData = (fetchUtility.fetchSortedLocation()?.map(
-                    {
-                        (value: Location) -> String in
-                            return value.name!
-                    }))!
+//                self.pickerData = (fetchUtility.fetchSortedLocation()?.map(
+//                    {
+//                        (value: Location) -> String in
+//                            return value.name!
+//                    }))!
                 picker.reloadAllComponents()
                 self.picker.isHidden = false
                 if self.locationText.text != nil && !self.locationText.text!.isEmpty  {

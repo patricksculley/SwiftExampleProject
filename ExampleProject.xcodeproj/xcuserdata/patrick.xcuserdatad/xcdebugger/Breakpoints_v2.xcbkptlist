@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ExampleProject/ItemViewController.swift"
-            timestampString = "519627019.984506"
+            timestampString = "519800795.542982"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "showAddEntityAlertView(entityType:actionType:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ExampleProject/ItemViewController.swift"
-            timestampString = "519627019.984506"
+            timestampString = "519800795.542982"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "showAddEntityAlertView(entityType:actionType:)"
             landmarkType = "7">
          </BreakpointContent>

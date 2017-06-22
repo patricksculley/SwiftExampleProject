@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		CD0236551EE623520007E687 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0236541EE623520007E687 /* SearchTableViewController.swift */; };
 		CD0375381EF8D1A2008C2199 /* CoreDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0375371EF8D1A2008C2199 /* CoreDataExtension.swift */; };
-		CD03753A1EF8D7D4008C2199 /* FetchUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0375391EF8D7D4008C2199 /* FetchUtility.swift */; };
 		CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBC81EE4C6E8008A1433 /* AppDelegate.swift */; };
 		CD25BBCE1EE4C6E8008A1433 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD25BBCC1EE4C6E8008A1433 /* Main.storyboard */; };
 		CD25BBD11EE4C6E8008A1433 /* ExampleProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBCF1EE4C6E8008A1433 /* ExampleProject.xcdatamodeld */; };
@@ -19,6 +18,10 @@
 		CD25BBEC1EE4C6E8008A1433 /* ExampleProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBEB1EE4C6E8008A1433 /* ExampleProjectUITests.swift */; };
 		CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */; };
 		CD25BBFD1EE4E2CF008A1433 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */; };
+		CD95F6311EFA364900729E48 /* CoreDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD95F6301EFA364900729E48 /* CoreDataFetch.swift */; };
+		CD9F634C1EFB74B1007B582C /* URLDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F634B1EFB74B1007B582C /* URLDataService.swift */; };
+		CD9F634E1EFB78AA007B582C /* CoreDataLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F634D1EFB78AA007B582C /* CoreDataLoad.swift */; };
+		CD9F63501EFB8183007B582C /* BackgroundDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F634F1EFB8183007B582C /* BackgroundDataCoordinator.swift */; };
 		CDC940D81EE9F1210085EEF7 /* EntityViewControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC940D71EE9F1210085EEF7 /* EntityViewControllerInterface.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +45,6 @@
 /* Begin PBXFileReference section */
 		CD0236541EE623520007E687 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		CD0375371EF8D1A2008C2199 /* CoreDataExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtension.swift; sourceTree = "<group>"; };
-		CD0375391EF8D7D4008C2199 /* FetchUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchUtility.swift; path = ../FetchUtility.swift; sourceTree = "<group>"; };
 		CD25BBC51EE4C6E8008A1433 /* ExampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD25BBC81EE4C6E8008A1433 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD25BBCD1EE4C6E8008A1433 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +60,10 @@
 		CD25BBED1EE4C6E8008A1433 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
+		CD95F6301EFA364900729E48 /* CoreDataFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataFetch.swift; sourceTree = "<group>"; };
+		CD9F634B1EFB74B1007B582C /* URLDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLDataService.swift; sourceTree = "<group>"; };
+		CD9F634D1EFB78AA007B582C /* CoreDataLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataLoad.swift; sourceTree = "<group>"; };
+		CD9F634F1EFB8183007B582C /* BackgroundDataCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundDataCoordinator.swift; sourceTree = "<group>"; };
 		CDC940D71EE9F1210085EEF7 /* EntityViewControllerInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityViewControllerInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,8 +95,11 @@
 		CD03753B1EF8DF08008C2199 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CD0375391EF8D7D4008C2199 /* FetchUtility.swift */,
 				CD0375371EF8D1A2008C2199 /* CoreDataExtension.swift */,
+				CD95F6301EFA364900729E48 /* CoreDataFetch.swift */,
+				CD9F634B1EFB74B1007B582C /* URLDataService.swift */,
+				CD9F634D1EFB78AA007B582C /* CoreDataLoad.swift */,
+				CD9F634F1EFB8183007B582C /* BackgroundDataCoordinator.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -312,9 +321,12 @@
 				CD25BBFD1EE4E2CF008A1433 /* ItemViewController.swift in Sources */,
 				CD25BBD11EE4C6E8008A1433 /* ExampleProject.xcdatamodeld in Sources */,
 				CD0236551EE623520007E687 /* SearchTableViewController.swift in Sources */,
-				CD03753A1EF8D7D4008C2199 /* FetchUtility.swift in Sources */,
 				CD0375381EF8D1A2008C2199 /* CoreDataExtension.swift in Sources */,
+				CD95F6311EFA364900729E48 /* CoreDataFetch.swift in Sources */,
+				CD9F634E1EFB78AA007B582C /* CoreDataLoad.swift in Sources */,
 				CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */,
+				CD9F63501EFB8183007B582C /* BackgroundDataCoordinator.swift in Sources */,
+				CD9F634C1EFB74B1007B582C /* URLDataService.swift in Sources */,
 				CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */,
 				CDC940D81EE9F1210085EEF7 /* EntityViewControllerInterface.swift in Sources */,
 			);

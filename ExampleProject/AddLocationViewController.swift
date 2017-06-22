@@ -22,7 +22,6 @@ class AddLocationViewController: UIViewController, EntityViewControllerInterface
         navigationBar.topItem?.title = "Add Location"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelHandler(sender:)))
         saveButton.addTarget(self, action: #selector(saveHandler), for: .touchUpInside)
-
     }
     
     func cancelHandler(sender: UIBarButtonItem) {

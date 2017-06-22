@@ -35,5 +35,23 @@ extension EntityBase    {
         default: return nil
         }
     }
+    
+    func setPropertiesFrom(jsonDictionary: Dictionary<String, Any>)  {
+        for (key, value) in jsonDictionary {
+            // If property exists
+            if (self.responds(to: Selector(key)))  {
+                print("Setting: \(key)")
+                if let stringValue = value as? String   {
+                    print("String value: \(stringValue)")
+                    self.setValue(stringValue, forKey: key)
+                }
+                if let numberValue = value as? NSNumber   {
+                    print("Number value: \(numberValue)")
+                    self.setValue(numberValue, forKey: key)
+                }
+            }
+        }
+    }
+
 
 }
