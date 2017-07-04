@@ -29,11 +29,15 @@ extension EntityBase    {
     
     static func entityTypeFromString(value:String) -> EntityType?    {
         switch value {
-        case String(describing:EntityType.Bin) : return EntityType.Bin
-        case String(describing:EntityType.Item) : return EntityType.Item
-        case String(describing:EntityType.Location) : return EntityType.Location
-        default: return nil
+            case String(describing:EntityType.Bin) : return EntityType.Bin
+            case String(describing:EntityType.Item) : return EntityType.Item
+            case String(describing:EntityType.Location) : return EntityType.Location
+            default: return nil
         }
+    }
+    
+    static func entityTypeToString(entityType:EntityType) -> String   {
+        return String(describing:entityType)
     }
     
     func setPropertiesFrom(jsonDictionary: Dictionary<String, Any>)  {

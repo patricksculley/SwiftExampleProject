@@ -19,9 +19,6 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
     let searchController = UISearchController(searchResultsController: nil)
     let allScope = "All"
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initializeFetchedResultsController()
@@ -50,7 +47,9 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
     }
     
     func loadTableData()    {
-        backgroundDataCoordinator.requestAndLoadEntities(objectType: "Item")
+        backgroundDataCoordinator.requestAndLoadEntities(entityType: EntityType.Item, completionHandler: nil)
+        backgroundDataCoordinator.requestAndLoadEntities(entityType: EntityType.Bin, completionHandler: nil)
+        backgroundDataCoordinator.requestAndLoadEntities(entityType: EntityType.Location, completionHandler: nil)
     }
 
     // MARK: - Table view data source
@@ -108,7 +107,6 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
         } catch {
             print("Fetched results fetch has failed")
         }
-        tableView.reloadData()
     }
     
     @IBAction func refreshHandler(_ sender: UIRefreshControl) {

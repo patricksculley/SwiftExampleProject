@@ -18,19 +18,19 @@ class URLDataService {
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) -> Void in
-            if (error == nil) {
-                let httpResponse = response as! HTTPURLResponse
-                let statusCode = httpResponse.statusCode
-                if (statusCode == 200) {
-                    if [Any]() is T   {
-                        let array = self.readJSONArray(data: data)
-                        responseHandler(array as? T)
+                if (error == nil) {
+                    let httpResponse = response as! HTTPURLResponse
+                    let statusCode = httpResponse.statusCode
+                    if (statusCode == 200) {
+                        if [Any]() is T   {
+                            let array = self.readJSONArray(data: data)
+                            responseHandler(array as? T)
+                        }
                     }
+                } else  {
+                    print("doURLRequest error: \(error!.localizedDescription)")
+                    responseHandler(nil)
                 }
-            } else  {
-                print("doURLRequest error: \(error!.localizedDescription)")
-                responseHandler(nil)
-            }
         }
         task.resume()
     }

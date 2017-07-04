@@ -70,7 +70,8 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
     
     func saveHandler(sender: UIBarButtonItem) {
         print("Save button clicked!")
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let coreDataLoad = CoreDataLoad()
+        let context = coreDataLoad.context
         let item = Item(context: context)
         item.name = itemNameText.text!
         item.entityType = EntityType.Item
@@ -82,7 +83,7 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
         } catch{
             print("error: \(error.localizedDescription)")
         }
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        coreDataLoad.saveContext()
         itemNameText.text = ""
         itemQtyText.text = ""
     }
@@ -93,7 +94,8 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
         
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
             [weak alert, weak self] (_) in
-                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                let coreDataLoad = CoreDataLoad()
+                let context = coreDataLoad.context
                 context.reset()
                 let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
                 print("Text field: \(textField.text)")
@@ -121,7 +123,7 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
                 }
             
             if !isError {
-                (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                coreDataLoad.saveContext()
             } else {
                 UIAlertController(title: "\(actionType) \(entityType)", message: errorMessage, preferredStyle: .alert)
             }

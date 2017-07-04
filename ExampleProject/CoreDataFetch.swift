@@ -11,7 +11,7 @@ import Foundation
 
 class CoreDataFetch    {
     
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var context:NSManagedObjectContext = CoreDataFetch.persistentContainer.viewContext
     
     init()  {
         context.automaticallyMergesChangesFromParent = true
@@ -71,6 +71,16 @@ class CoreDataFetch    {
         fetchRequest.sortDescriptors = [nameSort]
         return NSFetchedResultsController<T>(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
     }
+    
+    static var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "ExampleProject")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
 
     
 }
