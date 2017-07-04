@@ -11,9 +11,10 @@ import XCTest
 
 class ExampleProjectTests: XCTestCase {
     
+    let coreDataFetch = CoreDataFetch()
+
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
@@ -24,6 +25,19 @@ class ExampleProjectTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+    
+    func testCoreDataFetchEntity()  {
+        //Test happy path:
+        let testId = 1
+        var item:Item? = coreDataFetch.fetchEntity(byId: NSNumber.init(value: testId))
+        XCTAssert(Int(item!.id)  == testId)
+        //Test no object path:
+        item = coreDataFetch.fetchEntity(byId: NSNumber.init(value: 123))
+        XCTAssertNil(item)
+        //Test error path:
+        let entityBase:EntityBase? = coreDataFetch.fetchEntity(byId: NSNumber.init(value: 123))
+        XCTAssertNil(entityBase)
     }
     
     func testPerformanceExample() {

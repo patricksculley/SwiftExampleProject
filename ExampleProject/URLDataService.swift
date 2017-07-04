@@ -12,26 +12,30 @@ class URLDataService {
     
     let serverURLBase = "http://localhost:4002/"
     
-    func doURLRequest<T>(objectType:String, responseHandler:@escaping (T) -> Void)	{
+    func doURLRequest<T>(objectType:String, responseHandler:@escaping (T?) -> Void)	{
         let requestURL: URL = URL(string: "\(serverURLBase)\(objectType)")!
         let urlRequest: URLRequest = URLRequest(url: requestURL)
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) -> Void in
-            let httpResponse = response as! HTTPURLResponse
-            let statusCode = httpResponse.statusCode
-            if (statusCode == 200) {
-                print("Everyone is fine, file downloaded successfully.")
-                if [Any]() is T {
-                    let array = self.readJSONArray(data: data)
-                    responseHandler(array as! T)
+            if (error == nil) {
+                let httpResponse = response as! HTTPURLResponse
+                let statusCode = httpResponse.statusCode
+                if (statusCode == 200) {
+                    if [Any]() is T   {
+                        let array = self.readJSONArray(data: data)
+                        responseHandler(array as? T)
+                    }
                 }
+            } else  {
+                print("doURLRequest error: \(error!.localizedDescription)")
+                responseHandler(nil)
             }
         }
         task.resume()
     }
     
-    func readJSONArray(data:Data?) -> [Any]	{
+    func readJSONArray(data:Data?) -> [Any]?	{
         do {
             let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments)
             if let array = json as? [Any]    {
@@ -50,6 +54,6 @@ class URLDataService {
         } catch {
             print("Error with Json: \(error)")
         }
-        return [Any]()
+        return nil
     }
 }

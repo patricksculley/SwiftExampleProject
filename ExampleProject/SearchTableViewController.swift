@@ -13,13 +13,11 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
     @IBOutlet weak var refreshHandler: UIRefreshControl!
 
     var entity:EntityBase?
-    private var filteredEntityArray = [EntityBase]()
-    var fetchedResultsController: NSFetchedResultsController<Item>!
+    var fetchedResultsController: NSFetchedResultsController<EntityBase>!
     let backgroundDataCoordinator:BackgroundDataCoordinator = BackgroundDataCoordinator()
 
     let searchController = UISearchController(searchResultsController: nil)
     let allScope = "All"
-    var currentScope:String?
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -30,7 +28,6 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
         navigationController!.navigationBar.topItem?.title = "Item Search"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelHandler(sender:)))
         self.loadTableData()
-        currentScope = allScope
         // Setup the Search Controller
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -54,13 +51,6 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
     
     func loadTableData()    {
         backgroundDataCoordinator.requestAndLoadEntities(objectType: "Item")
-//        do {
-//            let fetchUtility = FetchUtility()
-////            entityArray = fetchUtility.fetchSortedLocation()!
-//        } catch {
-//            print("Fetch error \(error.localizedDescription)")
-//        }
-//        filteredEntityArray = entityArray
     }
 
     // MARK: - Table view data source
@@ -79,27 +69,46 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
-        let item = self.fetchedResultsController?.object(at: indexPath)
-        cell.textLabel?.text = "\(item?.entityTypeValue ?? "<none>"): \((item?.name!)!)"
-        cell.detailTextLabel?.text = "Bin: \(item?.itemToBinFK?.name ?? "<none>"), Location: \(item?.itemToBinFK?.binToLocationFK?.name ?? "<none>")"
+        let entity = self.fetchedResultsController?.object(at: indexPath)
+        cell.textLabel?.text = "\(entity?.entityTypeValue ?? "<none>"): \((entity?.name!)!)"
+        if let item = entity as? Item    {
+            cell.detailTextLabel?.text = "Bin: \(item.itemToBinFK?.name ?? "<none>"), Location: \(item.itemToBinFK?.binToLocationFK?.name ?? "<none>")"
+        }
+        if let bin = entity as? Bin    {
+            cell.detailTextLabel?.text = "Location: \(bin.binToLocationFK?.name ?? "<none>")"
+        }
+        if let location = entity as? Location    {
+            cell.detailTextLabel?.text = "Location: \(location.name!)"
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.entity = filteredEntityArray[indexPath.row]
+        self.entity = self.fetchedResultsController?.object(at: indexPath)
         print("\(self.entity?.name!) selected")
         self.performSegue(withIdentifier: "unwindToAddItem", sender: self)
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String) {
-//        filteredEntityArray = entityArray.filter({[weak self] ( entity : EntityBase) -> Bool in
-//            self!.currentScope = scope
-//            let entityTypeMatch = (self!.currentScope == self!.allScope || String(describing:entity.entityType!) == scope)
-//            let name = entity.name!.lowercased()
-//            print("\(String(describing:entity.entityType!)) \(name) entityTypeMatch: \(entityTypeMatch) searchTextMatch: \(searchText == "" || entity.name!.lowercased().contains(searchText.lowercased()))")
-//            return entityTypeMatch && (searchText == "" || entity.name!.lowercased().contains(searchText.lowercased()))
-//        })
-//        tableView.reloadData()
+        var predicate:NSPredicate? = nil
+        if searchText.isEmpty {
+            if scope != allScope {
+                predicate = NSPredicate(format: "entityTypeValue == %@", scope)
+            }
+        } else {
+            if scope != allScope {
+                predicate = NSPredicate(format: "name CONTAINS[cd] %@ and entityTypeValue == %@", searchText, scope)
+            } else {
+                predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchText)
+            }
+        }
+        fetchedResultsController.fetchRequest.predicate = predicate
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("Fetched results fetch has failed")
+        }
+        tableView.reloadData()
     }
     
     @IBAction func refreshHandler(_ sender: UIRefreshControl) {
