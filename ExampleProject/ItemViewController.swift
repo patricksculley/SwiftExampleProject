@@ -45,7 +45,6 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
         picker.delegate = self
         picker.dataSource = self
         picker.isHidden = true
-        
     }
     
     func updateTitle(actionType:ActionType) {
@@ -71,6 +70,21 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
     
     func saveHandler(sender: UIBarButtonItem) {
         print("Save button clicked!")
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let item = Item(context: context)
+        item.name = itemNameText.text!
+        item.entityType = EntityType.Item
+        if let qty = Int(itemQtyText.text!) {
+            item.qty = Int16(NSNumber(value:qty))
+        }
+        do {
+            try item.validateForInsert()
+        } catch{
+            print("error: \(error.localizedDescription)")
+        }
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        itemNameText.text = ""
+        itemQtyText.text = ""
     }
 
     func showAddEntityAlertView(entityType:EntityType, actionType:ActionType)    {
@@ -124,11 +138,11 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
         var allowEditing = true
         switch textField {
             case self.locationText:
-//                self.pickerData = (fetchUtility.fetchSortedLocation()?.map(
-//                    {
-//                        (value: Location) -> String in
-//                            return value.name!
-//                    }))!
+                let locationArray:[Location]? = coreDataFetch.fetchEntities()
+                self.pickerData = (locationArray?.map {
+                        (value: Location) -> String in
+                            return value.name!
+                    })!
                 picker.reloadAllComponents()
                 self.picker.isHidden = false
                 if self.locationText.text != nil && !self.locationText.text!.isEmpty  {
@@ -139,7 +153,11 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
                 }
                 allowEditing = false
             case self.binText:
-//                self.pickerData = binArray
+                let binArray:[Bin]? = coreDataFetch.fetchEntities()
+                self.pickerData = (binArray?.map {
+                        (value: Bin) -> String in
+                        return value.name!
+                })!
                 picker.reloadAllComponents()
                 self.picker.isHidden = false
                 if self.binText.text != nil && !self.binText.text!.isEmpty  {

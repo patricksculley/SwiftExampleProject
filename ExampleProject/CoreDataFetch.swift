@@ -50,6 +50,20 @@ class CoreDataFetch    {
         return nil
     }
     
+    func fetchEntities<T:EntityBase>() -> [T]?	{
+        do {
+            let objectTypeName = String(describing:type(of:T.self)).replacingOccurrences(of: ".Type", with: "")
+            let fetchRequest = NSFetchRequest<T>(entityName: objectTypeName)
+            let nameSort = NSSortDescriptor(key: "name", ascending: true)
+            fetchRequest.sortDescriptors = [nameSort]
+            let array = try self.context.fetch(fetchRequest)
+            return array
+        } catch {
+            print("Fetching entities Failed")
+        }
+        return nil
+    }
+    
     func getFetchedResultsController<T:EntityBase>() -> NSFetchedResultsController<T>    {
         let objectTypeName = String(describing:type(of:T.self)).replacingOccurrences(of: ".Type", with: "")
         let fetchRequest = NSFetchRequest<T>(entityName: objectTypeName)
