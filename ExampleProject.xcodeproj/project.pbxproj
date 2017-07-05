@@ -18,6 +18,7 @@
 		CD25BBEC1EE4C6E8008A1433 /* ExampleProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBEB1EE4C6E8008A1433 /* ExampleProjectUITests.swift */; };
 		CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */; };
 		CD25BBFD1EE4E2CF008A1433 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */; };
+		CD67DFB31F0D8A710081533A /* ExampleProjectSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD67DFB21F0D8A710081533A /* ExampleProjectSearchTests.swift */; };
 		CD95F6311EFA364900729E48 /* CoreDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD95F6301EFA364900729E48 /* CoreDataFetch.swift */; };
 		CD9F634C1EFB74B1007B582C /* URLDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F634B1EFB74B1007B582C /* URLDataService.swift */; };
 		CD9F634E1EFB78AA007B582C /* CoreDataLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F634D1EFB78AA007B582C /* CoreDataLoad.swift */; };
@@ -60,6 +61,7 @@
 		CD25BBED1EE4C6E8008A1433 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
+		CD67DFB21F0D8A710081533A /* ExampleProjectSearchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleProjectSearchTests.swift; sourceTree = "<group>"; };
 		CD95F6301EFA364900729E48 /* CoreDataFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataFetch.swift; sourceTree = "<group>"; };
 		CD9F634B1EFB74B1007B582C /* URLDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLDataService.swift; sourceTree = "<group>"; };
 		CD9F634D1EFB78AA007B582C /* CoreDataLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataLoad.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		CD25BBEA1EE4C6E8008A1433 /* ExampleProjectUITests */ = {
 			isa = PBXGroup;
 			children = (
+				CD67DFB21F0D8A710081533A /* ExampleProjectSearchTests.swift */,
 				CD25BBEB1EE4C6E8008A1433 /* ExampleProjectUITests.swift */,
 				CD25BBED1EE4C6E8008A1433 /* Info.plist */,
 			);
@@ -344,6 +347,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD67DFB31F0D8A710081533A /* ExampleProjectSearchTests.swift in Sources */,
 				CD25BBEC1EE4C6E8008A1433 /* ExampleProjectUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

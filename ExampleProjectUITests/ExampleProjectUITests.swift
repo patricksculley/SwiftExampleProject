@@ -9,7 +9,9 @@
 import XCTest
 
 class ExampleProjectUITests: XCTestCase {
-        
+    
+    let app = XCUIApplication()
+
     override func setUp() {
         super.setUp()
         
@@ -28,7 +30,42 @@ class ExampleProjectUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testCreateItem() {
+        print(app.debugDescription)
+        let itemName = "Test item"
+        let itemTextField = app.textFields["Item Name Input"]
+        itemTextField.tap()
+        itemTextField.typeText(itemName)
+        
+        let qtyTextField = app.textFields["Item Quantity Input"]
+        qtyTextField.tap()
+        qtyTextField.typeText("13")
+        createLocation()
+        createBin()
+        app.buttons["Save Button"].tap()
+        XCTAssert((itemTextField.value as! String).isEmpty)
+
     }
+    
+    func createLocation()    {
+        let testName = "My test location"
+        app.buttons["Add Location Button"].tap()
+        let alert = app.alerts["Create Location"]
+        let binTextField = alert.textFields["Location Name Input"]
+        binTextField.typeText(testName)
+        alert.buttons["OK"].tap()
+        XCTAssert(app.textFields["Location Input"].value as! String == testName)
+    }
+    
+    func createBin()    {
+        let testName = "My test bin"
+        app.buttons["Add Bin Button"].tap()
+        let alert = app.alerts["Create Bin"]
+        let binTextField = alert.textFields["Bin Name Input"]
+        binTextField.typeText(testName)
+        alert.buttons["OK"].tap()
+        XCTAssert(app.textFields["Bin Input"].value as! String == testName)
+    }
+
     
 }

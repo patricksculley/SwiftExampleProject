@@ -107,6 +107,7 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
         } catch {
             print("Fetched results fetch has failed")
         }
+        tableView.reloadData()
     }
     
     @IBAction func refreshHandler(_ sender: UIRefreshControl) {

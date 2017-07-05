@@ -60,16 +60,19 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
     
     func addLocationHandler(sender: UIBarButtonItem) {
         print("Add location clicked!")
+        self.picker.isHidden = true
         self.showAddEntityAlertView(entityType: .Location, actionType: .Create)
     }
     
     func addBinHandler(sender: UIBarButtonItem) {
         print("Add location clicked!")
+        self.picker.isHidden = true
         self.showAddEntityAlertView(entityType: .Bin, actionType: .Create)
     }
     
     func saveHandler(sender: UIBarButtonItem) {
         print("Save button clicked!")
+        self.picker.isHidden = true
         let coreDataLoad = CoreDataLoad()
         let context = coreDataLoad.context
         let item = Item(context: context)
@@ -90,7 +93,11 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
 
     func showAddEntityAlertView(entityType:EntityType, actionType:ActionType)    {
         let alert = UIAlertController(title: "\(actionType) \(entityType)", message: "Enter \(entityType) name", preferredStyle: .alert)
-        alert.addTextField { (textField) in textField.placeholder = "\(entityType) name"}
+        alert.addTextField {
+            (textField) in
+                textField.placeholder = "\(entityType) name"
+                textField.accessibilityLabel = "\(entityType) Name Input"
+        }
         
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
             [weak alert, weak self] (_) in
@@ -102,31 +109,30 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
                 var isError = false
                 var errorMessage = ""
                 if entityType == EntityType.Bin {
-                    
                     let bin = Bin(context: context)
                     bin.name = textField.text!
                     bin.entityType = EntityType.Bin
-                    let  text:String = self!.locationText.text!
-                    let location = self!.coreDataFetch.fetchEntity(byName:text)
+                    let location = self!.coreDataFetch.fetchEntity(byName:self!.locationText.text!)
                     bin.binToLocationFK = location as! Location?
-                    
                     do {
                         try bin.validateForInsert()
                     } catch {
                         isError = true
                         errorMessage = error.localizedDescription
                     }
+                    self!.binText.text = bin.name
                 } else if entityType == EntityType.Location {
                     let location = Location(context: context)
                     location.name = textField.text!
                     location.entityType = EntityType.Location
+                    self!.locationText.text = location.name
                 }
             
-            if !isError {
-                coreDataLoad.saveContext()
-            } else {
-                UIAlertController(title: "\(actionType) \(entityType)", message: errorMessage, preferredStyle: .alert)
-            }
+                if !isError {
+                    coreDataLoad.saveContext()
+                } else {
+                    UIAlertController(title: "\(actionType) \(entityType)", message: errorMessage, preferredStyle: .alert)
+                }
 
         }))
         
