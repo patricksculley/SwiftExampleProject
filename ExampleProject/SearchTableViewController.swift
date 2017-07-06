@@ -33,6 +33,7 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
         // Setup the Scope Bar
         searchController.searchBar.scopeButtonTitles = [allScope, String(describing: EntityType.Item), String(describing: EntityType.Bin), String(describing: EntityType.Location)]
         tableView.tableHeaderView = searchController.searchBar
+        tableView.accessibilityLabel = "Search Table"
     }
     
     func initializeFetchedResultsController() {
@@ -79,6 +80,8 @@ class SearchTableViewController: UITableViewController, EntityViewControllerInte
         if let location = entity as? Location    {
             cell.detailTextLabel?.text = "Location: \(location.name!)"
         }
+        cell.accessibilityLabel = "Cell: \(entity?.id)"
+        cell.contentView.accessibilityLabel = "Content: \(entity?.id)"
         return cell
     }
     

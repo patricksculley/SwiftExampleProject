@@ -47,8 +47,8 @@ class ExampleProjectSearchTests: XCTestCase {
         let finish = firstCell.coordinate(withNormalizedOffset: CGVector(dx:0, dy:6))
         for _ in 0..<3 {
             start.press(forDuration: 0, thenDragTo: finish)
+            XCTAssert(app.tables.cells.containing(.staticText, identifier:"Item: \(itemName)").element.exists)
         }
-        XCTAssert(app.tables.cells.containing(.staticText, identifier:"Item: \(itemName)").element.exists)
     }
     
     func testSearchFiltering()  {

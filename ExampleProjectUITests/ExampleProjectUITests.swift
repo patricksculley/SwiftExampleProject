@@ -27,6 +27,8 @@ class ExampleProjectUITests: XCTestCase {
         XCUIApplication().launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        
+        print(app.debugDescription)
     }
     
     override func tearDown() {
@@ -34,47 +36,16 @@ class ExampleProjectUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testCreateLocation()    {
+    func testSelectLocation()    {
         createLocation(locationName: testLocationName)
         createLocation(locationName: "Another Location")
+        selectLocation()
     }
     
-    func createLocation(locationName:String)    {
-        app.buttons["Add Location Button"].tap()
-        let alert = app.alerts["Create Location"]
-        let binTextField = alert.textFields["Location Name Input"]
-        binTextField.typeText(locationName)
-        alert.buttons["OK"].tap()
-        XCTAssert(app.textFields["Location Input"].value as! String == locationName)
-    }
-    
-    func testCreateBin()    {
+    func testSelectBin()    {
         createBin(binName: testBinName)
         createBin(binName: "Another Bin")
-    }
-    
-    func createBin(binName:String)    {
-        app.buttons["Add Bin Button"].tap()
-        let alert = app.alerts["Create Bin"]
-        let binTextField = alert.textFields["Bin Name Input"]
-        binTextField.typeText(binName)
-        alert.buttons["OK"].tap()
-        XCTAssert(app.textFields["Bin Input"].value as! String == binName)
-    }
-    
-    func testCreateItem() {
-        print(app.debugDescription)
-        let itemTextField = app.textFields["Item Name Input"]
-        itemTextField.tap()
-        itemTextField.typeText(testItemName)
-        
-        let qtyTextField = app.textFields["Item Quantity Input"]
-        qtyTextField.tap()
-        qtyTextField.typeText("13")
-        selectLocation()
         selectBin()
-        app.buttons["Save Button"].tap()
-        XCTAssert((itemTextField.value as! String).isEmpty)
     }
     
     func selectLocation()   {
@@ -93,6 +64,39 @@ class ExampleProjectUITests: XCTestCase {
         XCTAssert(app.textFields["Bin Input"].value as! String == testBinName)
     }
     
+    func testCreateItem() {
+        print(app.debugDescription)
+        let itemTextField = app.textFields["Item Name Input"]
+        itemTextField.tap()
+        itemTextField.typeText(testItemName)
+        
+        let qtyTextField = app.textFields["Item Quantity Input"]
+        qtyTextField.tap()
+        qtyTextField.typeText("13")
+        createLocation(locationName: testLocationName)
+        createBin(binName: testBinName)
+        app.buttons["Save Button"].tap()
+        XCTAssert((itemTextField.value as! String).isEmpty)
+    }
+    
+    func createLocation(locationName:String)    {
+        app.buttons["Add Location Button"].tap()
+        let alert = app.alerts["Create Location"]
+        let binTextField = alert.textFields["Location Name Input"]
+        binTextField.typeText(locationName)
+        alert.buttons["OK"].tap()
+        XCTAssert(app.textFields["Location Input"].value as! String == locationName)
+    }
+    
+    func createBin(binName:String)    {
+        app.buttons["Add Bin Button"].tap()
+        let alert = app.alerts["Create Bin"]
+        let binTextField = alert.textFields["Bin Name Input"]
+        binTextField.typeText(binName)
+        alert.buttons["OK"].tap()
+        XCTAssert(app.textFields["Bin Input"].value as! String == binName)
+    }
+
     func waitForElementToAppear(_ element: XCUIElement) {
         let predicate = NSPredicate(format: "exists == true")
         let _ = expectation(for: predicate, evaluatedWith: element, handler: nil)
