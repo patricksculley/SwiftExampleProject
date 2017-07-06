@@ -11,6 +11,10 @@ import XCTest
 class ExampleProjectUITests: XCTestCase {
     
     let app = XCUIApplication()
+    
+    let testItemName = "Test item"
+    let testLocationName = "My test location"
+    let testBinName = "My test bin"
 
     override func setUp() {
         super.setUp()
@@ -30,42 +34,80 @@ class ExampleProjectUITests: XCTestCase {
         super.tearDown()
     }
     
+    func testCreateLocation()    {
+        createLocation(locationName: testLocationName)
+        createLocation(locationName: "Another Location")
+    }
+    
+    func createLocation(locationName:String)    {
+        app.buttons["Add Location Button"].tap()
+        let alert = app.alerts["Create Location"]
+        let binTextField = alert.textFields["Location Name Input"]
+        binTextField.typeText(locationName)
+        alert.buttons["OK"].tap()
+        XCTAssert(app.textFields["Location Input"].value as! String == locationName)
+    }
+    
+    func testCreateBin()    {
+        createBin(binName: testBinName)
+        createBin(binName: "Another Bin")
+    }
+    
+    func createBin(binName:String)    {
+        app.buttons["Add Bin Button"].tap()
+        let alert = app.alerts["Create Bin"]
+        let binTextField = alert.textFields["Bin Name Input"]
+        binTextField.typeText(binName)
+        alert.buttons["OK"].tap()
+        XCTAssert(app.textFields["Bin Input"].value as! String == binName)
+    }
+    
     func testCreateItem() {
         print(app.debugDescription)
-        let itemName = "Test item"
         let itemTextField = app.textFields["Item Name Input"]
         itemTextField.tap()
-        itemTextField.typeText(itemName)
+        itemTextField.typeText(testItemName)
         
         let qtyTextField = app.textFields["Item Quantity Input"]
         qtyTextField.tap()
         qtyTextField.typeText("13")
-        createLocation()
-        createBin()
+        selectLocation()
+        selectBin()
         app.buttons["Save Button"].tap()
         XCTAssert((itemTextField.value as! String).isEmpty)
-
     }
     
-    func createLocation()    {
-        let testName = "My test location"
-        app.buttons["Add Location Button"].tap()
-        let alert = app.alerts["Create Location"]
-        let binTextField = alert.textFields["Location Name Input"]
-        binTextField.typeText(testName)
-        alert.buttons["OK"].tap()
-        XCTAssert(app.textFields["Location Input"].value as! String == testName)
+    func selectLocation()   {
+        let textField = app.textFields["Location Input"]
+        textField.tap()
+        app.pickerWheels.element.adjust(toPickerWheelValue: testLocationName)
+        waitForElementValueToUpdate(element: textField, expectedValue: testLocationName)
+        XCTAssert(app.textFields["Location Input"].value as! String == testLocationName)
     }
     
-    func createBin()    {
-        let testName = "My test bin"
-        app.buttons["Add Bin Button"].tap()
-        let alert = app.alerts["Create Bin"]
-        let binTextField = alert.textFields["Bin Name Input"]
-        binTextField.typeText(testName)
-        alert.buttons["OK"].tap()
-        XCTAssert(app.textFields["Bin Input"].value as! String == testName)
+    func selectBin()   {
+        let textField = app.textFields["Bin Input"]
+        textField.tap()
+        app.pickerWheels.element.adjust(toPickerWheelValue: testBinName)
+        waitForElementValueToUpdate(element: textField, expectedValue: testBinName)
+        XCTAssert(app.textFields["Bin Input"].value as! String == testBinName)
     }
-
     
+    func waitForElementToAppear(_ element: XCUIElement) {
+        let predicate = NSPredicate(format: "exists == true")
+        let _ = expectation(for: predicate, evaluatedWith: element, handler: nil)
+        waitForExpectations(timeout: 1)
+    }
+    
+    func waitForElementToDisappear(_ element: XCUIElement) {
+        let predicate = NSPredicate(format: "exists == false")
+        let _ = expectation(for: predicate, evaluatedWith: element, handler: nil)
+        waitForExpectations(timeout: 1)
+    }
+    
+    func waitForElementValueToUpdate(element: XCUIElement, expectedValue: String) {
+        let predicate = NSPredicate(format: "value == %@", expectedValue)
+        let _ = expectation(for: predicate, evaluatedWith: element, handler: nil)
+        waitForExpectations(timeout: 1)
+    }
 }

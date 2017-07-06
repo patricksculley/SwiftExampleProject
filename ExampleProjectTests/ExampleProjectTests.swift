@@ -24,7 +24,7 @@ class ExampleProjectTests: XCTestCase {
         super.tearDown()
     }
     
-    func testCoreDataBackgroundLoad()   {
+    func coreDataBackgroundLoad()   {
         let backgroundDataCoordinator = BackgroundDataCoordinator()
         let backgroundDataCoordinatorExpectation = expectation(description: "BackgroundDataCoordinator loads Item in background")
         backgroundDataCoordinator.requestAndLoadEntities(entityType: EntityType.Item) {
@@ -41,6 +41,7 @@ class ExampleProjectTests: XCTestCase {
     }
     
     func testCoreDataFetchEntityById()  {
+        coreDataBackgroundLoad()
         //Test happy path:
         let testId = 1
         var item:Item? = coreDataFetch.fetchEntity(byId: NSNumber.init(value: testId))
@@ -54,6 +55,7 @@ class ExampleProjectTests: XCTestCase {
     }
     
     func testCoreDataFetchEntityByName()  {
+        coreDataBackgroundLoad()
         //Test happy path:
         let testName = "Item 1"
         var item:Item? = coreDataFetch.fetchEntity(byName: testName)
@@ -67,6 +69,7 @@ class ExampleProjectTests: XCTestCase {
     }
     
     func testCoreDataFetchedResultsController() {
+        coreDataBackgroundLoad()
         var fetchedResultsController: NSFetchedResultsController<Item>!
         fetchedResultsController = coreDataFetch.getFetchedResultsController()
         do {

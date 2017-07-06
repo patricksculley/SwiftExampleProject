@@ -11,6 +11,8 @@ import XCTest
 class ExampleProjectSearchTests: XCTestCase {
     
     let app = XCUIApplication()
+    
+    let itemName = "Item 1"
 
     override func setUp() {
         super.setUp()
@@ -32,15 +34,13 @@ class ExampleProjectSearchTests: XCTestCase {
     
     func testSearchAllItems()   {
         print(app.debugDescription)
-        let itemName = "Item: Item 1"
         app.navigationBars["Create Item"].buttons["Search"].tap()
-        XCTAssert(app.tables.cells.containing(.staticText, identifier:itemName).element.exists)
+        XCTAssert(app.tables.cells.containing(.staticText, identifier:"Item: \(itemName)").element.exists)
         app.navigationBars["Item Search"].buttons["Cancel"].tap()
         XCTAssert(app.navigationBars["Create Item"].exists)
     }
     
     func testTableRefresh() {
-        let itemName = "Item: Item 1"
         app.navigationBars["Create Item"].buttons["Search"].tap()
         let firstCell = app.tables.cells.element(boundBy: 0)
         let start = firstCell.coordinate(withNormalizedOffset: CGVector(dx:0, dy:0))
@@ -48,16 +48,15 @@ class ExampleProjectSearchTests: XCTestCase {
         for _ in 0..<3 {
             start.press(forDuration: 0, thenDragTo: finish)
         }
-        XCTAssert(app.tables.cells.containing(.staticText, identifier:itemName).element.exists)
+        XCTAssert(app.tables.cells.containing(.staticText, identifier:"Item: \(itemName)").element.exists)
     }
     
     func testSearchFiltering()  {
-        let itemName = "Item: Test item"
         app.navigationBars["Create Item"].buttons["Search"].tap()
         app.tables.searchFields["Search"].tap()
         app.buttons["Item"].tap()
-        app.searchFields["Search"].typeText("test")
-        XCTAssert(app.tables.cells.containing(.staticText, identifier:itemName).element.exists)
+        app.searchFields["Search"].typeText(itemName)
+        XCTAssert(app.tables.cells.containing(.staticText, identifier:"Item: \(itemName)").element.exists)
 
     }
     
