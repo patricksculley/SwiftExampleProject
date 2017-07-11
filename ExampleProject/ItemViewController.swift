@@ -46,7 +46,7 @@ class ItemViewController: UIViewController, EntityViewControllerInterface, UIPic
         picker.dataSource = self
         picker.isHidden = true
     }
-    
+        
     func updateTitle(actionType:ActionType) {
         navigationBar.topItem?.title = "\(String(describing:actionType)) Item"
     }

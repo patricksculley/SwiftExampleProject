@@ -12,6 +12,9 @@ import Foundation
 
 class BackgroundDataCoordinator {
     
+    var coreDataLoadObservers = [CoreDataLoadObserver]()
+    let CoreDataLoadNotificationName = "CoreDataLoadNotification"
+
     func requestAndLoadEntities(entityType:EntityType, completionHandler:((Bool)->Void)?)     {
         let context:NSManagedObjectContext = CoreDataFetch.persistentContainer.newBackgroundContext()
         context.perform {
@@ -24,6 +27,9 @@ class BackgroundDataCoordinator {
                         if let jsonDictionary = object as? Dictionary<String, Any> {
                             let item = coreDataLoad.loadItem(fromJSON: jsonDictionary)
                             print("Loaded item: \(item.name)")
+                            
+                            self.dispatchLoadObserverEvent(entityType: item.entityType!, id: Int(item.id))
+                            self.dispatchLoadObserverNotification(entityType: item.entityType!, id: Int(item.id))
                         }
                     }
                     completionHandler?(true)
@@ -33,4 +39,46 @@ class BackgroundDataCoordinator {
             }
         }
     }
+    
+    func addCoreDataLoadObserver(observer:CoreDataLoadObserver) {
+        if !coreDataLoadObservers.contains{ $0 === observer } {
+            coreDataLoadObservers.append(observer)
+        }
+    }
+    
+    func removeCoreDataLoadObserver(observer:CoreDataLoadObserver) {
+        if !coreDataLoadObservers.contains{ $0 === observer } {
+            coreDataLoadObservers.remove(at:
+                coreDataLoadObservers.index(where: {
+                    (item) -> Bool in item === observer
+                })!)
+        }
+    }
+    
+    func dispatchLoadObserverEvent(entityType:EntityType, id:Int) {
+        for observer in coreDataLoadObservers {
+            observer.coreDataUpdated(entityType:entityType, id:id)
+        }
+    }
+    
+    func addCoreDataLoadNotificationObserver(observer:CoreDataLoadObserver) {
+        NotificationCenter.default.addObserver(
+            observer,
+//            #selector(coreDataUpdated(notification:)),
+            selector: Selector("coreDataUpdateObserved:"),
+            name: Notification.Name(CoreDataLoadNotificationName),
+            object: self)
+    }
+    
+    func removeCoreDataNotificationObserver(observer:CoreDataLoadObserver) {
+        NotificationCenter.default.removeObserver(observer, name: Notification.Name(CoreDataLoadNotificationName), object: self)
+        
+    }
+    
+    func dispatchLoadObserverNotification(entityType:EntityType, id:Int) {
+        let userInfo = ["entityType": String(describing:entityType),
+                        "id": "\(id)"]
+        NotificationCenter.default.post(name: Notification.Name(CoreDataLoadNotificationName), object: self, userInfo: userInfo)
+    }
+
 }

@@ -19,6 +19,11 @@
 		CD25BBFB1EE4CDD2008A1433 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */; };
 		CD25BBFD1EE4E2CF008A1433 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */; };
 		CD67DFB31F0D8A710081533A /* ExampleProjectSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD67DFB21F0D8A710081533A /* ExampleProjectSearchTests.swift */; };
+		CD67DFB51F140F400081533A /* UserPreferencesUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD67DFB41F140F400081533A /* UserPreferencesUtil.swift */; };
+		CD67DFB81F14129E0081533A /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD67DFB71F14129E0081533A /* UtilTests.swift */; };
+		CD67DFBA1F1417C70081533A /* MySingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD67DFB91F1417C70081533A /* MySingleton.swift */; };
+		CD67DFBC1F144B530081533A /* CoreDataLoadObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD67DFBB1F144B530081533A /* CoreDataLoadObserver.swift */; };
+		CD67DFBE1F146CDD0081533A /* TestListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD67DFBD1F146CDD0081533A /* TestListener.swift */; };
 		CD95F6311EFA364900729E48 /* CoreDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD95F6301EFA364900729E48 /* CoreDataFetch.swift */; };
 		CD9F634C1EFB74B1007B582C /* URLDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F634B1EFB74B1007B582C /* URLDataService.swift */; };
 		CD9F634E1EFB78AA007B582C /* CoreDataLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9F634D1EFB78AA007B582C /* CoreDataLoad.swift */; };
@@ -62,6 +67,11 @@
 		CD25BBFA1EE4CDD2008A1433 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		CD25BBFC1EE4E2CF008A1433 /* ItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
 		CD67DFB21F0D8A710081533A /* ExampleProjectSearchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleProjectSearchTests.swift; sourceTree = "<group>"; };
+		CD67DFB41F140F400081533A /* UserPreferencesUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPreferencesUtil.swift; sourceTree = "<group>"; };
+		CD67DFB71F14129E0081533A /* UtilTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
+		CD67DFB91F1417C70081533A /* MySingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySingleton.swift; sourceTree = "<group>"; };
+		CD67DFBB1F144B530081533A /* CoreDataLoadObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataLoadObserver.swift; sourceTree = "<group>"; };
+		CD67DFBD1F146CDD0081533A /* TestListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListener.swift; sourceTree = "<group>"; };
 		CD95F6301EFA364900729E48 /* CoreDataFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataFetch.swift; sourceTree = "<group>"; };
 		CD9F634B1EFB74B1007B582C /* URLDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLDataService.swift; sourceTree = "<group>"; };
 		CD9F634D1EFB78AA007B582C /* CoreDataLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataLoad.swift; sourceTree = "<group>"; };
@@ -129,6 +139,7 @@
 		CD25BBC71EE4C6E8008A1433 /* ExampleProject */ = {
 			isa = PBXGroup;
 			children = (
+				CD67DFB61F140FB40081533A /* Util */,
 				CD03753B1EF8DF08008C2199 /* Model */,
 				CDC940D61EE9EFD00085EEF7 /* Protocol */,
 				CDC940CD1EE9EA310085EEF7 /* Entity */,
@@ -146,6 +157,7 @@
 		CD25BBDF1EE4C6E8008A1433 /* ExampleProjectTests */ = {
 			isa = PBXGroup;
 			children = (
+				CD67DFB71F14129E0081533A /* UtilTests.swift */,
 				CD25BBE01EE4C6E8008A1433 /* ExampleProjectTests.swift */,
 				CD25BBE21EE4C6E8008A1433 /* Info.plist */,
 			);
@@ -172,6 +184,15 @@
 			name = ViewController;
 			sourceTree = "<group>";
 		};
+		CD67DFB61F140FB40081533A /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				CD67DFB41F140F400081533A /* UserPreferencesUtil.swift */,
+				CD67DFB91F1417C70081533A /* MySingleton.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 		CDC940CD1EE9EA310085EEF7 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,7 +203,9 @@
 		CDC940D61EE9EFD00085EEF7 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				CD67DFBB1F144B530081533A /* CoreDataLoadObserver.swift */,
 				CDC940D71EE9F1210085EEF7 /* EntityViewControllerInterface.swift */,
+				CD67DFBD1F146CDD0081533A /* TestListener.swift */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";
@@ -321,12 +344,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD67DFBC1F144B530081533A /* CoreDataLoadObserver.swift in Sources */,
 				CD25BBFD1EE4E2CF008A1433 /* ItemViewController.swift in Sources */,
+				CD67DFB51F140F400081533A /* UserPreferencesUtil.swift in Sources */,
 				CD25BBD11EE4C6E8008A1433 /* ExampleProject.xcdatamodeld in Sources */,
 				CD0236551EE623520007E687 /* SearchTableViewController.swift in Sources */,
 				CD0375381EF8D1A2008C2199 /* CoreDataExtension.swift in Sources */,
 				CD95F6311EFA364900729E48 /* CoreDataFetch.swift in Sources */,
+				CD67DFBE1F146CDD0081533A /* TestListener.swift in Sources */,
 				CD9F634E1EFB78AA007B582C /* CoreDataLoad.swift in Sources */,
+				CD67DFBA1F1417C70081533A /* MySingleton.swift in Sources */,
 				CD25BBC91EE4C6E8008A1433 /* AppDelegate.swift in Sources */,
 				CD9F63501EFB8183007B582C /* BackgroundDataCoordinator.swift in Sources */,
 				CD9F634C1EFB74B1007B582C /* URLDataService.swift in Sources */,
@@ -340,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD25BBE11EE4C6E8008A1433 /* ExampleProjectTests.swift in Sources */,
+				CD67DFB81F14129E0081533A /* UtilTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

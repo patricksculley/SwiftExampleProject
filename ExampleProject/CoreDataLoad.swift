@@ -11,9 +11,9 @@ import UIKit
 import Foundation
 
 class CoreDataLoad {
-    
     var context:NSManagedObjectContext = CoreDataFetch.persistentContainer.viewContext
     var coreDataFetch:CoreDataFetch = CoreDataFetch()
+    
     
     init()  {
         context.automaticallyMergesChangesFromParent = true
@@ -72,5 +72,7 @@ class CoreDataLoad {
             }
         }
     }
+    
+    
 
 }
